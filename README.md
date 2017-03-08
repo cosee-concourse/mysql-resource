@@ -1,6 +1,6 @@
-# MySQL User/Database Managment Resource
+# MySQL User/Database Management Resource
 
-Creates/removes user or databases and handles DB/TABLE rights specified in a yaml. 
+Creates/removes user or databases and handles database user rights specified in a yaml. 
 
 ## Source Configuration
 
@@ -12,33 +12,63 @@ Creates/removes user or databases and handles DB/TABLE rights specified in a yam
 
 ## Behavior
 
-### `check`: Checks configuration
+### `check`: Checks and validates configuration
 
 Checks login credentials and tests connection to MySQL server
 
-### `in`: Noop
+### `in`: No-op
 
 #### Parameters
 
 *None.*
 
-### `out`: Executes SQL commands 
+### `out`: Executes SQL operations.
 
-Executes SQL commands read from a sql file
+Executes SQL operations specified in a yaml. Needs to be in a specific format (defined below).
 
 #### Parameters
  
-* `config_file`: *Required* File path to configuration yaml file.
+* `config_file`: *Required* File path to yaml configuration file.
 
-Configuration is in following format:
+Operations must be specified in the following format. All operations are optional.
 ``` yaml
-commands:
-    - ...
-```
-Example:
-``` yaml
-commands:
-    - ...
+DATABASES:
+    CREATE: 
+        # list of databases to create
+        - DB1
+        - DB2
+    REMOVE: 
+        # list of databases to remove
+        - DB4
+        - DB5
+USERS:
+    CREATE:
+        # list of users to create
+        - USERNAME: username
+          PASSWORD: password        
+        - USERNAME: username2
+          PASSWORD: password2
+    GRANT-ALL:
+        # list of users to grant all rights on a database
+        - USER: username
+          DATABASE: database-name        
+        - USER: username
+          DATABASE: database-name
+    GRANT-SELECT:
+        # list of users to grant SELECT rights on a database
+        - USER: username
+          DATABASE: database-name
+        - USER: username2
+          DATABASE: database-name
+    GRANT-SELECT-TABLE:
+        # list of users to grant SELECT right on a specific table in a database
+        - USER: username
+          DATABASE: database-name
+          TABLE: table-name        
+        - USER: username2
+          DATABASE: database-name
+          TABLE: table-name
+        
 ```
 
 ## Example Configuration
@@ -64,7 +94,7 @@ commands:
 
 ### Plan
 
-```
+``` yaml
 - put: mysql
   params: 
      config_file: source/script.sql

@@ -2,6 +2,7 @@ import mysql.connector
 from mysql.connector import errorcode
 from concourse_common.common import *
 
+
 def create_db(db_name, cursor):
     cursor.execute("CREATE DATABASE IF NOT  EXISTS `" + db_name + "`;")
     # cursor.execute("USE `" + db_name + "`;")
