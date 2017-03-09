@@ -2,6 +2,8 @@ DATABASES:
     CREATE:
         - database-name1
         - database-name2
+        - database-name3
+        - database-name4
     REMOVE:
         - database-name3
         - database-name4
@@ -11,9 +13,10 @@ USERS:
           PASSWORD: password1
         - USERNAME: username2
           PASSWORD: password2
+        - USERNAME: username3
+          PASSWORD: password3
     REMOVE:
         - username3
-        - username4
     GRANT-ALL:
         - USER: username1
           DATABASE: database-name1

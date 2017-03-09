@@ -12,7 +12,7 @@ services:
   - docker
 
 install:
-  - pip install -r opt/requirements.txt
+  - pip install --egg -r opt/requirements.txt
 
 script:
   - pytest
