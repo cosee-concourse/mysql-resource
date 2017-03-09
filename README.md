@@ -66,7 +66,7 @@ USERS:
         # list of users to grant SELECT right on a specific table in a database
         - USER: username
           DATABASE: database-name
-          TABLE: table-name        
+          TABLE: tablename        
         - ...
         
 ```
