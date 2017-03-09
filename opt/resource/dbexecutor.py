@@ -39,4 +39,4 @@ class Executor:
             user = grant['USER']
             db = grant['DATABASE']
             table = grant['TABLE']
-            self.db_handler.grant_select_user_on_db(user, db, table)
+            self.db_handler.grant_select_user_on_table(user, db, table)

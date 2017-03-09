@@ -28,9 +28,6 @@ USERS:
         - USER: username2
           DATABASE: database-name2
     GRANT-SELECT-TABLE:
-        - USER: username1
-          DATABASE: database-name1
-          TABLE: table-name
         - USER: username2
           DATABASE: database-name1
-          TABLE: table-name
+          TABLE: tablename
