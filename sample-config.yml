@@ -1,0 +1,33 @@
+DATABASES:
+    CREATE:
+        - database-name1
+        - database-name2
+    REMOVE:
+        - database-name3
+        - database-name4
+USERS:
+    CREATE:
+        - USERNAME: username1
+          PASSWORD: password1
+        - USERNAME: username2
+          PASSWORD: password2
+    REMOVE:
+        - username3
+        - username4
+    GRANT-ALL:
+        - USER: username1
+          DATABASE: database-name1
+        - USER: username1
+          DATABASE: database-name2
+    GRANT-SELECT:
+        - USER: username2
+          DATABASE: database-name1
+        - USER: username2
+          DATABASE: database-name2
+    GRANT-SELECT-TABLE:
+        - USER: username1
+          DATABASE: database-name1
+          TABLE: table-name
+        - USER: username2
+          DATABASE: database-name1
+          TABLE: table-name
