@@ -31,43 +31,43 @@ Executes SQL operations specified in a yaml. Needs to be in a specific format (d
 * `config_file`: *Required* File path to yaml configuration file.
 
 Operations must be specified in the following format. All operations are optional.
+Database operations are executed before user operations.
 ``` yaml
 DATABASES:
     CREATE: 
         # list of databases to create
-        - DB1
-        - DB2
+        - database-name
+        - ...
     REMOVE: 
         # list of databases to remove
-        - DB4
-        - DB5
+        - database-name
+        - ...
 USERS:
     CREATE:
         # list of users to create
         - USERNAME: username
           PASSWORD: password        
-        - USERNAME: username2
-          PASSWORD: password2
+        - ...
+    REMOVE:
+        # list of users to remove
+        - username
+        - ...
     GRANT-ALL:
         # list of users to grant all rights on a database
         - USER: username
           DATABASE: database-name        
-        - USER: username
-          DATABASE: database-name
+        - ...
     GRANT-SELECT:
         # list of users to grant SELECT rights on a database
         - USER: username
           DATABASE: database-name
-        - USER: username2
-          DATABASE: database-name
+        - ...
     GRANT-SELECT-TABLE:
         # list of users to grant SELECT right on a specific table in a database
         - USER: username
           DATABASE: database-name
           TABLE: table-name        
-        - USER: username2
-          DATABASE: database-name
-          TABLE: table-name
+        - ...
         
 ```
 
@@ -89,7 +89,6 @@ USERS:
     user: USER
     password: PASSWORD
     host: HOSTNAME
-    port: PORT
 ```
 
 ### Plan
@@ -97,5 +96,5 @@ USERS:
 ``` yaml
 - put: mysql
   params: 
-     config_file: source/script.sql
+     config_file: source/config.yml
 ```

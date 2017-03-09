@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 from concourse_common.jsonutil import *
 import schemas
-import dbhandler
+from dbhandler import DBHandler
 from model import *
 
 
@@ -10,7 +10,12 @@ def execute():
     if not valid:
         return -1
 
-    dbhandler.connect(get_source_value(payload, USER_KEY), get_source_value(payload, PASSWORD_KEY), get_source_value(payload, HOST_KEY))
+    db_handler = DBHandler(get_source_value(payload, USER_KEY), get_source_value(payload, PASSWORD_KEY), get_source_value(payload, HOST_KEY))
+
+    if db_handler is None:
+        return -1
+    else:
+        db_handler.close_connection()
 
     print([{}])
 
