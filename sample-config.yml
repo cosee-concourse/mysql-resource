@@ -31,3 +31,6 @@ USERS:
         - USER: username2
           DATABASE: database-name1
           TABLE: tablename
+        - USER: username1
+          DATABASE: mysql
+          TABLE: user
