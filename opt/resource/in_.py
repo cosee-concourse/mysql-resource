@@ -8,7 +8,15 @@ from model import *
 
 
 def execute(directory):
-    print([{}])
+    valid, payload = load_and_validate_payload(schemas, Request.IN)
+    if not valid:
+        return -1
+
+    version = get_version(payload, VERSION_KEY_NAME)
+    if version is None:
+        print([{}])
+    else:
+        print(get_version_output(version, VERSION_KEY_NAME))
 
     return 0
 

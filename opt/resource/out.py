@@ -35,7 +35,7 @@ def execute(directory):
             db_executor = Executor(db_handler, parser)
             db_executor.execute()
 
-    print([{}])
+    print(get_version_output("no-version",VERSION_KEY_NAME))
 
     return 0
 
