@@ -1,6 +1,7 @@
 # MySQL User/Database Management Resource
 
 Creates/removes user or databases and handles database user rights specified in a yaml. 
+Requires MySQL Server version 5.6 or higher.
 
 ## Source Configuration
 
@@ -80,6 +81,7 @@ USERS:
   source:
     repository: quay.io/cosee-concourse/mysql-resource
 ```
+
 ### Resource
 
 ``` yaml

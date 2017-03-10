@@ -16,27 +16,44 @@ class DBHandler:
         self.close_connection()
 
     def create_db(self, db_name):
-        self.execute_db_command("CREATE DATABASE IF NOT  EXISTS `" + db_name + "`;")
-        # cursor.execute("USE `" + db_name + "`;")
-        # cursor.execute("CREATE TABLE t (c CHAR(20) CHARACTER SET utf8 COLLATE utf8_bin);")
+        self.execute_db_command("CREATE DATABASE IF NOT EXISTS `" + db_name + "`;")
 
     def drop_db(self, db_name):
-        self.execute_db_command("DROP DATABASE `" + db_name + "`;")
+        self.execute_db_command("DROP DATABASE IF EXISTS `" + db_name + "`;")
 
     def create_user(self, user_name, user_pw):
+        if self.user_exists(user_name):
+            log_warning("Ignored operation CREATE USER: User with name {} already exists.")
+            return
         self.execute_db_command("CREATE USER `" + user_name + "`@`%` IDENTIFIED BY \'" + user_pw + "\';")
 
     def drop_user(self, user_name):
+        if not self.user_exists(user_name):
+            log_warning("Ignored operation DROP USER: User with name {} does not exists.")
+            return
         self.execute_db_command("DROP USER `" + user_name + "`;")
 
     def grant_all_user_on_db(self, user_name, db_name):
+        if not self.user_exists(user_name):
+            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT ALL ON `" + db_name + "`.* TO `" + user_name + "`@`%`;")
 
     def grant_select_user_on_db(self, user_name, db_name):
+        if not self.user_exists(user_name):
+            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.* TO `" + user_name + "`@`%`;")
 
     def grant_select_user_on_table(self, user_name, db_name, table_name):
+        if not self.user_exists(user_name):
+            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.`" + table_name + "` TO `" + user_name + "`@`%`;")
+
+    def user_exists(self, username):
+        self.execute_db_command("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '{}')".format(username))
+        if self.cursor.next() == (1,):
+            return True
+        else:
+            return False
 
     def execute_db_command(self, command):
         self.cursor.execute(command)
