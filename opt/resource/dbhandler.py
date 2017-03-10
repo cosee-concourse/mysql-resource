@@ -23,13 +23,13 @@ class DBHandler:
 
     def create_user(self, user_name, user_pw):
         if self.user_exists(user_name):
-            log_warning("Ignored operation CREATE USER: User with name {} already exists.")
+            log_warning("Ignored operation CREATE USER: User {} already exists.")
             return
         self.execute_db_command("CREATE USER `" + user_name + "`@`%` IDENTIFIED BY \'" + user_pw + "\';")
 
     def drop_user(self, user_name):
         if not self.user_exists(user_name):
-            log_warning("Ignored operation DROP USER: User with name {} does not exists.")
+            log_warning("Ignored operation DROP USER: User {} does not exist.")
             return
         self.execute_db_command("DROP USER `" + user_name + "`;")
 
@@ -44,12 +44,25 @@ class DBHandler:
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.* TO `" + user_name + "`@`%`;")
 
     def grant_select_user_on_table(self, user_name, db_name, table_name):
+        if not self.table_exists(db_name, table_name):
+            log_warning("Ignored operation GRANT SELECT-TABLE: Table {} does not exist".format(table_name))
+            return
         if not self.user_exists(user_name):
             log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.`" + table_name + "` TO `" + user_name + "`@`%`;")
 
     def user_exists(self, username):
         self.execute_db_command("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '{}')".format(username))
+        if self.cursor.next() == (1,):
+            return True
+        else:
+            return False
+
+    def table_exists(self, database, table):
+        self.execute_db_command("""
+            SELECT count(*)
+            FROM information_schema.TABLES
+            WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')""".format(database, table))
         if self.cursor.next() == (1,):
             return True
         else:
