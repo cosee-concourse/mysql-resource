@@ -8,7 +8,7 @@ from concourse_common import testutil
 
 class TestInput(unittest.TestCase):
 
-    def test_returns_valid_json(self):
+    def test_returns_valid_json_with_version(self):
         testutil.put_stdin(
             """
             {
@@ -24,4 +24,4 @@ class TestInput(unittest.TestCase):
             """)
         io = testutil.mock_stdout()
         self.assertEqual(in_.execute('/'), 0)
-        self.assertEqual(testutil.read_from_io(io), "[{}]")
+        self.assertEqual(testutil.read_from_io(io), '{"version": {"version": "some-version"}}')

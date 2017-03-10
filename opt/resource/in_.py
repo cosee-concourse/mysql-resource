@@ -14,7 +14,7 @@ def execute(directory):
 
     version = get_version(payload, VERSION_KEY_NAME)
     if version is None:
-        print([{}])
+        print({})
     else:
         print(get_version_output(version, VERSION_KEY_NAME))
 
