@@ -23,13 +23,13 @@ class DBHandler:
 
     def create_user(self, user_name, user_pw):
         if self.user_exists(user_name):
-            log_warning("Ignored operation CREATE USER: User {} already exists.")
+            log_warning("Ignored operation CREATE USER: User {} already exists.".format(user_name))
             return
         self.execute_db_command("CREATE USER `" + user_name + "`@`%` IDENTIFIED BY \'" + user_pw + "\';")
 
     def drop_user(self, user_name):
         if not self.user_exists(user_name):
-            log_warning("Ignored operation DROP USER: User {} does not exist.")
+            log_warning("Ignored operation DROP USER: User {} does not exist.".format(user_name))
             return
         self.execute_db_command("DROP USER `" + user_name + "`;")
 
