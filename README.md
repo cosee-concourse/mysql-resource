@@ -82,7 +82,7 @@ USERS:
 `sql_file`: *Optional* File path to .sql file that contains SQL commands. 
 File needs to be encoded in either `utf-8` or `latin1`
 
-`command`: *Optional* Inline SQL command (only one command). 
+`command`: *Optional* Inline SQL commands. 
 
 One of the three parameters needs to be specified. 
 
