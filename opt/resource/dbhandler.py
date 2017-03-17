@@ -69,6 +69,9 @@ class DBHandler:
             return False
 
     def execute_db_command(self, command):
+        self.cursor.execute(command)
+
+    def execute_multiple_db_commands(self, command):
         self.cursor.execute(command, multi=True)
 
     def close_connection(self):

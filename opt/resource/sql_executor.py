@@ -26,7 +26,7 @@ def execute_sql_file(sql_file_path, db_handler):
             else:  # when you get a line ending in ';' then exec statement and reset for next statement
                 statement += line
                 log_info("Executing statement: {}".format(statement))
-                db_handler.execute_db_command(statement)
+                db_handler.execute_multiple_db_commands(statement)
                 statement = ""
     except Exception as e:
         db_handler.rollback()
@@ -39,7 +39,7 @@ def execute_sql_file(sql_file_path, db_handler):
 def execute_sql_command(command, db_handler):
     try:
         log_info("Executing statement: {}".format(command))
-        db_handler.execute_db_command(command)
+        db_handler.execute_multiple_db_commands(command)
     except Exception as e:
         db_handler.rollback()
         log_error(e)
