@@ -4,7 +4,7 @@ from concourse_common.common import *
 
 
 class DBHandler:
-    def __init__(self, user,password,host):
+    def __init__(self, user, password, host):
         self.connection = self.connect_internal(user, password, host)
 
     def __enter__(self):
@@ -35,12 +35,14 @@ class DBHandler:
 
     def grant_all_user_on_db(self, user_name, db_name):
         if not self.user_exists(user_name):
-            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
+            log_warning(
+                "WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT ALL ON `" + db_name + "`.* TO `" + user_name + "`@`%`;")
 
     def grant_select_user_on_db(self, user_name, db_name):
         if not self.user_exists(user_name):
-            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
+            log_warning(
+                "WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.* TO `" + user_name + "`@`%`;")
 
     def grant_select_user_on_table(self, user_name, db_name, table_name):
@@ -48,7 +50,8 @@ class DBHandler:
             log_warning("Ignored operation GRANT SELECT-TABLE: Table {} does not exist".format(table_name))
             return
         if not self.user_exists(user_name):
-            log_warning("WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
+            log_warning(
+                "WARNING: User {} was created implicitly by GRANT command because it did not exist.".format(user_name))
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.`" + table_name + "` TO `" + user_name + "`@`%`;")
 
     def user_exists(self, username):
@@ -72,7 +75,7 @@ class DBHandler:
         self.cursor.execute(command)
 
     def execute_multiple_db_commands(self, command):
-        self.cursor.execute(command, multi=True)
+        for _ in self.cursor.execute(command, multi=True): pass
 
     def close_connection(self):
         self.connection.close()
@@ -84,7 +87,7 @@ class DBHandler:
         self.connection.rollback()
 
     @staticmethod
-    def connect_internal(user,password,host):
+    def connect_internal(user, password, host):
         config = {
             'user': user,
             'password': password,

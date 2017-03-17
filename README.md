@@ -135,5 +135,5 @@ SQL Script File -> Configuration File -> Inline command
 ``` yaml
 - put: mysql
   params: 
-     command: "CREATE DATABASE `dbname`;"
+     command: CREATE DATABASE `dbname`;
 ```
