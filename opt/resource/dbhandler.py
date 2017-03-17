@@ -52,8 +52,8 @@ class DBHandler:
         self.execute_db_command("GRANT SELECT ON `" + db_name + "`.`" + table_name + "` TO `" + user_name + "`@`%`;")
 
     def user_exists(self, username):
-        self.execute_db_command("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '{}')".format(username))
-        if self.cursor.next() == (1,):
+        self.execute_db_command("SELECT EXISTS(SELECT 1 FROM mysql.user WHERE user = '{}');".format(username))
+        if self.cursor.fetchall() == (1,):
             return True
         else:
             return False
@@ -62,8 +62,8 @@ class DBHandler:
         self.execute_db_command("""
             SELECT count(*)
             FROM information_schema.TABLES
-            WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}')""".format(database, table))
-        if self.cursor.next() == (1,):
+            WHERE (TABLE_SCHEMA = '{}') AND (TABLE_NAME = '{}');""".format(database, table))
+        if self.cursor.fetchall() == (1,):
             return True
         else:
             return False
