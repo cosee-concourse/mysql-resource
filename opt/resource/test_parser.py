@@ -1,13 +1,11 @@
 import unittest
 
-from concourse_common import testutil
-
-import parser
+import config_parser
 
 import yaml
 
 
-class TestParser(unittest.TestCase):
+class TestConfigParser(unittest.TestCase):
     yaml_string = \
         """
         DATABASES:
@@ -46,7 +44,7 @@ class TestParser(unittest.TestCase):
         """
 
     def setUp(self):
-        self.uut = parser.Parser(yaml.load(self.yaml_string))
+        self.uut = config_parser.ConfigParser(yaml.load(self.yaml_string))
 
     def test_db_create_list(self):
         expected = ['database-name1', 'database-name2']

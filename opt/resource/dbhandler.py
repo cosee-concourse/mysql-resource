@@ -74,6 +74,12 @@ class DBHandler:
     def close_connection(self):
         self.connection.close()
 
+    def commit(self):
+        self.connection.commit()
+
+    def rollback(self):
+        self.connection.rollback()
+
     @staticmethod
     def connect_internal(user,password,host):
         config = {

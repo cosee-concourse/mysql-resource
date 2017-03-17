@@ -53,11 +53,14 @@ out_schema = {
             "properties": {
                 "config_file": {
                     "type": "string"
+                },
+                "sql_file": {
+                    "type": "string"
+                },
+                "command": {
+                    "type": "string"
                 }
             },
-            "required": [
-              "config_file"
-            ],
             "additionalProperties": "false"
         }
     },

@@ -1,4 +1,4 @@
-class Executor:
+class ConfigExecutor:
     def __init__(self, db_handler, parser):
         self.db_handler = db_handler
         self.parser = parser

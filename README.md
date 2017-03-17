@@ -25,11 +25,18 @@ Checks login credentials and tests connection to MySQL server
 
 ### `out`: Executes SQL operations.
 
-Executes SQL operations specified in a yaml. Needs to be in a specific format (defined below).
+Executes SQL operations. There are three different options to input the SQL operations:
+
+1. Configuration File in yml in the format specified below
+
+2. SQL Script file (text file with list of commands)
+
+3. Inline command in pipeline yaml as `command` parameter
+
 
 #### Parameters
  
-* `config_file`: *Required* File path to yaml configuration file.
+* `config_file`: *Optional* File path to yaml configuration file.
 
 Operations must be specified in the following format. All operations are optional.
 Database operations are executed before user operations.
@@ -72,6 +79,18 @@ USERS:
         
 ```
 
+`sql_file`: *Optional* File path to .sql file that contains SQL commands. 
+File needs to be encoded in either `utf-8` or `latin1`
+
+`command`: *Optional* Inline SQL command (only one command). 
+
+One of the three parameters needs to be specified. 
+
+The execution order when multiple parameters are specified is:
+
+SQL Script File -> Configuration File -> Inline command
+
+
 ## Example Configuration
 
 ### Resource Type
@@ -95,8 +114,26 @@ USERS:
 
 ### Plan
 
+##### Configuration File
+
 ``` yaml
 - put: mysql
   params: 
      config_file: source/config.yml
+```
+
+##### SQL Script File
+
+``` yaml
+- put: mysql
+  params: 
+     sql_file: source/commands.sql
+```
+
+##### Inline command
+
+``` yaml
+- put: mysql
+  params: 
+     command: "CREATE DATABASE `dbname`;"
 ```

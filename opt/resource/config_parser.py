@@ -1,5 +1,5 @@
 
-class Parser:
+class ConfigParser:
     def __init__(self, yaml):
         self.yaml = yaml
 

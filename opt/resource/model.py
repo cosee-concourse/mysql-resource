@@ -7,3 +7,5 @@ HOST_KEY = 'host'
 
 # PARAMS
 CONFIG_FILE_KEY = 'config_file'
+SQL_FILE_KEY = 'sql_file'
+COMMAND_KEY = 'command'
