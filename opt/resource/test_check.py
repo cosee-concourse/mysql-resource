@@ -24,9 +24,9 @@ class TestCheck(unittest.TestCase):
 
         self.assertEqual(check.execute(), -1)
 
-    @patch("check.DBHandler")
-    def test_valid_mysql(self, mock_dbhandler):
-        mock_actual_instance = mock_dbhandler()
+    @patch("check.MySQLHandler")
+    def test_valid_mysql(self, mock_mysql_handler):
+        mock_actual_instance = mock_mysql_handler()
         io = testutil.mock_stdout()
         testutil.put_stdin(
             """
@@ -45,9 +45,9 @@ class TestCheck(unittest.TestCase):
         mock_actual_instance.close_connection.assert_called_once()
         self.assertEqual(testutil.read_from_io(io), "[{}]")
 
-    @patch("check.DBHandler")
-    def test_invalid_mysql(self, mock_dbhandler):
-        mock_dbhandler.return_value = None
+    @patch("check.MySQLHandler")
+    def test_invalid_mysql(self, mock_mysql_handler):
+        mock_mysql_handler.return_value = None
         testutil.put_stdin(
             """
             {

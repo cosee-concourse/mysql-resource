@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 from concourse_common.jsonutil import *
 import schemas
-from dbhandler import DBHandler
+from mysql_handler import MySQLHandler
 from model import *
 
 
@@ -10,12 +10,12 @@ def execute():
     if not valid:
         return -1
 
-    db_handler = DBHandler(get_source_value(payload, USER_KEY), get_source_value(payload, PASSWORD_KEY), get_source_value(payload, HOST_KEY))
+    mysql_handler = MySQLHandler(get_source_value(payload, USER_KEY), get_source_value(payload, PASSWORD_KEY), get_source_value(payload, HOST_KEY))
 
-    if db_handler is None:
+    if mysql_handler is None:
         return -1
     else:
-        db_handler.close_connection()
+        mysql_handler.close_connection()
 
     print([{}])
 

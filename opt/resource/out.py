@@ -5,10 +5,10 @@ from concourse_common.common import *
 from concourse_common.jsonutil import *
 
 import schemas
-import sql_executor
+import statement_executor
 from config_executor import ConfigExecutor
 from config_parser import ConfigParser
-from dbhandler import DBHandler
+from mysql_handler import MySQLHandler
 from model import *
 
 
@@ -51,7 +51,7 @@ def execute(directory):
 
 def execute_operations(operation_list, user, password, host):
     for operation in operation_list:
-        with DBHandler(user, password, host) as db_handler:
+        with MySQLHandler(user, password, host) as db_handler:
             method = operation[0]
             return_value = method(*operation[1], db_handler)
         if return_value is not 0:
@@ -82,12 +82,12 @@ def execute_sql_file(directory, sql_file, db_handler):
         log_error("SQL script file not found")
         return -1
 
-    return_value = sql_executor.execute_sql_file(sql_file_path, db_handler)
+    return_value = statement_executor.execute_sql_file(sql_file_path, db_handler)
     return return_value
 
 
 def execute_sql_command(command, db_handler):
-    return_value = sql_executor.execute_sql_command(command, db_handler)
+    return_value = statement_executor.execute_transaction(command, db_handler)
     return return_value
 
 

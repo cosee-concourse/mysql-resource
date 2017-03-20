@@ -3,7 +3,7 @@ from mysql.connector import errorcode
 from concourse_common.common import *
 
 
-class DBHandler:
+class MySQLHandler:
     def __init__(self, user, password, host):
         self.connection = self.connect_internal(user, password, host)
 
@@ -75,7 +75,9 @@ class DBHandler:
         self.cursor.execute(command)
 
     def execute_multiple_db_commands(self, command):
-        for _ in self.cursor.execute(command, multi=True): pass
+        # needs to iterate through results to execute command
+        for _ in self.cursor.execute(command, multi=True):
+            pass
 
     def close_connection(self):
         self.connection.close()
