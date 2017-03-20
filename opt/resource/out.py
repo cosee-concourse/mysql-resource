@@ -87,7 +87,7 @@ def execute_sql_file(directory, sql_file, db_handler):
 
 
 def execute_sql_command(command, db_handler):
-    return_value = statement_executor.execute_transaction(command, db_handler)
+    return_value = statement_executor.execute_transaction(db_handler, command)
     return return_value
 
 
