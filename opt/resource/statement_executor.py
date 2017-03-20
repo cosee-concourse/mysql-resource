@@ -15,7 +15,7 @@ def execute_sql_file(sql_file_path, db_handler):
             return -1
 
     statement_list = parse_statements(sql_contents)
-    return execute_transaction(db_handler, statement_list)
+    return execute_transaction(db_handler, *statement_list)
 
 
 def parse_statements(sql_file_contents):
